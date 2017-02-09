@@ -27,7 +27,7 @@ _________________________________________________________ -->
                             <div class="login">
                                 <%-- <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Sign in</span></a> --%>
                                
-                               <sec:authorize access="authenticated" var="authenticated"/>
+        <sec:authorize access="authenticated" var="authenticated"/>
                                
                                <c:choose>
 					<c:when test="${authenticated}">

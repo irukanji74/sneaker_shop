@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS sneakershop;
-GRANT ALL PRIVILEGES ON sneakershop.* TO pc@localhost IDENTIFIED BY 'pc';
+GRANT ALL PRIVILEGES ON sneakershop.* TO root@localhost IDENTIFIED BY 'root';
 
 USE sneakershop;
 
@@ -15,3 +15,4 @@ create table authorities (
     foreign key (username) references users (username),
     unique index authorities_idx_1 (username, authority)
 ) engine = InnoDb;
+

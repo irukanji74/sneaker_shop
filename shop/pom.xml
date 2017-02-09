@@ -4,7 +4,7 @@
 	<groupId>com.irukanji</groupId>
 	<artifactId>shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -111,7 +111,7 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
-			 <version>1.11.0</version>
+			<version>1.11.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -138,5 +138,12 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
 	</dependencies>
 </project>
