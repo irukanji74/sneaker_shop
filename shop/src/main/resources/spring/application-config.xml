@@ -14,7 +14,10 @@
 	
 	<context:component-scan base-package="???????????????????"/>
 	
+	<!-- enables scanning for @Transactional annotations -->
 	<tx:annotation-driven />
+	
+	
 	
 	<!-- <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 			<property name="dataSource" ref="dataSource"/>	
