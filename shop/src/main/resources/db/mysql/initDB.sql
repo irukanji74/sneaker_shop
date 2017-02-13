@@ -1,5 +1,5 @@
-SET FOREIGN_KEY_CHECKS=0; DROP TABLE users; SET FOREIGN_KEY_CHECKS=1;
-drop table authorities;
+drop table if exists authorities;
+DROP TABLE if exists users; 
 
 create table users (
     username varchar(50) not null primary key,
