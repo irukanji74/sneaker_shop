@@ -25,14 +25,14 @@ import org.hibernate.validator.constraints.SafeHtml;
 
 
 @Entity
-@Table(name="customers", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
+@Table(name="customers", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "customers_unique_email_idx")})
 public class Customer extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
 	
 	    @Column(name = "email", nullable = false, unique = true)
 	    @Email
-	    @NotEmpty
+	    @NotEmpty 
 	    @SafeHtml
 	    private String email;
 	
@@ -49,7 +49,7 @@ public class Customer extends NamedEntity {
 	    private Date registered = new Date();
 	    
 	    @Enumerated(EnumType.STRING)
-	    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+	    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "auth_email"))
 	    @Column(name = "role")
 	    @ElementCollection(fetch = FetchType.EAGER)
 	    @BatchSize(size = 200)
@@ -72,15 +72,24 @@ public class Customer extends NamedEntity {
 	    @Digits(fraction = 0, integer = 10)
 	    private String telephone;
 	    
-	    @Column(name="cart")
 	     //optional-создавать customer ТОЛЬКО с уже созданным cart 
-	    @OneToOne(cascade = CascadeType.ALL, optional=false, orphanRemoval=true, fetch = FetchType.EAGER)
+	    @OneToOne(cascade = CascadeType.ALL, optional=false, orphanRemoval=true, fetch=FetchType.EAGER)
+	    @JoinColumn(name="cart_id", nullable=false, referencedColumnName="id")
+	    //@PrimaryKeyJoinColumn - тогда id обеих сущностей будут идентичны
 	    private ShoppingCart cart;
 	 
 
 		public Customer() {
 		}
-
+		
+		public String getLastName() {
+			return lastName;
+		}
+		
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+		
 		public String getEmail() {
 			return email;
 		}
@@ -151,6 +160,14 @@ public class Customer extends NamedEntity {
 
 		public void setCart(ShoppingCart cart) {
 			this.cart = cart;
+		}
+
+		@Override
+		public String toString() {
+			return "Customer [email=" + email + ", password=" + password + ", enabled=" + enabled + ", registered="
+					+ registered + ", roles=" + roles + ", address=" + address + ", lastName=" + lastName + ", city="
+					+ city + ", telephone=" + telephone + ", cart=" + cart + ", id=" + id + ", isNew()=" + isNew()
+					+ "]";
 		}
 	    
 	    
