@@ -39,20 +39,21 @@
                 <p class="text-muted">If you have any questions, please feel free to
                   <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>
                 <hr>
-                <form action="customer-orders.html" method="post">
+               <form action="<spring:url value="/register"/>" method="post">
                   <div class="form-group">
                     <label for="name-login">Name</label>
-                    <input type="text" class="form-control" id="name-login">
+                    <input type="text" class="form-control" name="name">
                   </div>
                   <div class="form-group">
                     <label for="email-login">Email</label>
-                    <input type="text" class="form-control" id="email-login">
+                    <input type="text" class="form-control" name="email">
                   </div>
                   <div class="form-group">
                     <label for="password-login">Password</label>
-                    <input type="password" class="form-control" id="password-login">
+                    <input type="password" class="form-control" name="password">
                   </div>
                   <div class="text-center">
+     <sec:csrfInput />              
                     <button type="submit" class="btn btn-template-main">
                       <i class="fa fa-user-md"></i>Register</button>
                   </div>
@@ -66,7 +67,7 @@
                 <p class="text-muted">Воу. Велкам снова на наш сайт. Ну ёлы палы, как же круто, что ты снова с нами.
                 У нас столько всего нового... Просто залогинься и вперед за покупками, Йихууу!!!</p>
                 <hr>
-                <form action="<spring:url value="/register"/>" method="post">
+                <form action="<spring:url value="/to_login"/>" method="post">
                   <div class="form-group">
                     <label for="email">Login Name</label>
                     <input type="text" class="form-control" name="custom_username" >

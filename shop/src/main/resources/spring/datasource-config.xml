@@ -12,7 +12,7 @@
 
           <!-- Configurer that replaces ${...} placeholders with values from a properties file -->
           <!-- (in this case, JDBC-related settings for the dataSource definition below) -->
-     <context:property-placeholder location="classpath:spring/data-access.properties" system-properties-mode="OVERRIDE"/>
+         <context:property-placeholder location="classpath:spring/data-access.properties" system-properties-mode="OVERRIDE"/>
         
           <!-- DataSource configuration for the tomcat jdbc connection pool 
              See here for more details on commons-dbcp versus tomcat-jdbc: 
@@ -33,9 +33,9 @@
 			<jdbc:script location="classpath:init.sql"/>	
 		  </jdbc:embedded-database> -->
 		
-		<!-- Определяю свойства Hibernate в application-config.xml через data-access.properties -->
+		<!-- Определяю свойства Hibernate в application-config.xml через data-access.properties (перенес в application.xml)
 		<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 			<property name="dataSource" ref="dataSource"/>	
 			<property name="persistenceUnitName" value="shop"/>
-		</bean>	
+		</bean>	-->
 </beans>

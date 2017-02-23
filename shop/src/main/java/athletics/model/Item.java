@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,9 +17,13 @@ public class Item extends NamedEntity{
 	
 	@Column(name="total_quantity")
 	private Integer quantity;
-	
+	 
 	@Column(name="item_price")
 	private String price;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="cart_id", referencedColumnName="id")
+	private ShoppingCart cart;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="sex")
@@ -29,7 +36,7 @@ public class Item extends NamedEntity{
 	@Column(name="item_size")
 	private String size;
 	
-	@Column(name="desc")
+	@Column(name="description")
 	private String description;
 	
 	@Column(name="vendor_code")
@@ -69,5 +76,36 @@ public class Item extends NamedEntity{
 		this.vendorCode = vendorCode;
 	}
 
-	
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public ShoppingCart getCart() {
+		return cart;
+	}
+
+	public void setCart(ShoppingCart cart) {
+		this.cart = cart;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
 }

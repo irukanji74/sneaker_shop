@@ -1,48 +1,42 @@
-drop table if exists authorities;
-DROP TABLE IF EXISTS customers;
-DROP TABLE IF EXISTS shopping_carts;
-DROP TABLE IF EXISTS items;
+CREATE DATABASE IF NOT EXISTS sneakershop;
+USE sneakershop;
 
-CREATE TABLE customers (
-    id         INTEGER primary key,
-    email      varchar_ignorecase(50) not null,
-    name       varchar_ignorecase(50) ,
-    lastname   varchar_ignorecase(50) ,
-    city       varchar_ignorecase(50) ,
-    telephone  varchar_ignorecase(20),
-    cart_id    integer(10) UNSIGNED NOT NULL,
-    address    varchar_ignorecase(50) ,
-    password   varchar_ignorecase(50) not null,
-    registered TIMESTAMP DEFAULT now(),
-    enabled    boolean default 1,
-    FOREIGN KEY (cart_id) REFERENCES shopping_carts(id)
-) engine = InnoDb;
+CREATE TABLE IF NOT EXISTS  customers (
+  id         INT(4) UNSIGNED NOT NULL PRIMARY KEY ,
+  name       VARCHAR(30),
+  lastname   VARCHAR(30),
+  email      VARCHAR(30),
+  password   VARCHAR(100),
+  address    VARCHAR(30),
+  city       VARCHAR(30),
+  telephone  VARCHAR(30),
+  enabled    BOOLEAN DEFAULT TRUE,
+  registered TIMESTAMP,
+  cart_id   INT(4) UNSIGNED NOT NULL,
+  FOREIGN KEY (cart_id) REFERENCES shopping_carts (id)
+) engine=InnoDB;
 
-CREATE UNIQUE INDEX customers_unique_email_idx on customers (email);
+CREATE TABLE IF NOT EXISTS  customer_authorities(
+  customer_id  INT(4) not null,
+  role		   VARCHAR(30),
+  FOREIGN KEY (customer_id) REFERENCES customers (id)
+) engine=InnoDB;
 
-CREATE TABLE authorities (
-    auth_email varchar(50) not null,
-    authority varchar(50) not null,
-    FOREIGN KEY  (auth_email) references customers (email),
-    unique index unique_email_idx (auth_email, authority)
-) engine = InnoDb;
+CREATE TABLE IF NOT EXISTS shopping_carts(
+  id            INT(4) UNSIGNED NOT NULL PRIMARY KEY 
+)engine=InnoDB;
 
-CREATE TABLE shopping_carts(
-     id         INTEGER primary key,
-     item_id    Integer(10),
-     FOREIGN KEY (item_id) references items(id)
-     
-)engine = InnoDb;
-
-CREATE TABLE items(
-     id                Integer primary key,
-     total_quantity    Integer(10),
-     item_price        varchar_ignorecase(50),
-     sex               varchar_ignorecase(50),
-     clothes_type      varchar_ignorecase(50),
-     item_size         varchar_ignorecase(50),
-     desc              varchar_ignorecase,
-     vendor_code       varchar_ignorecase(50)
-)engine = InnoDb;
-
+CREATE TABLE IF NOT EXISTS items(
+  id            INT(4) UNSIGNED NOT NULL PRIMARY KEY ,
+  name          varchar(255) not null, 
+  description   varchar(255), 
+  item_price    varchar(255), 
+  total_quantity INT(4), 
+  sex           varchar(255), 
+  item_size     varchar(255), 
+  clothes_type  varchar(255), 
+  vendor_code   varchar(255),
+  cart_id       INT(4) UNSIGNED NOT NULL, 
+  FOREIGN KEY (cart_id) REFERENCES shopping_carts (id) ON DELETE CASCADE
+)engine=InnoDB;
 

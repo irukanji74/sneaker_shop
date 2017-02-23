@@ -1,6 +1,8 @@
 package athletics.model;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,42 +16,41 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Digits;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.hibernate.validator.constraints.SafeHtml;
+import org.springframework.util.CollectionUtils;
 
 
 @Entity
-@Table(name="customers", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "customers_unique_email_idx")})
+//@Table(name="customers", uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "customers_unique_email_idx")})
+@Table(name="customers")
 public class Customer extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
 	
 	    @Column(name = "email", nullable = false, unique = true)
 	    @Email
-	    @NotEmpty 
-	    @SafeHtml
+	   // @NotEmpty 
+	   // @SafeHtml
 	    private String email;
 	
 	    @Column(name = "password", nullable = false)
-	    @NotEmpty
-	    @Length(min = 5)
-	    @SafeHtml
+	    //@NotEmpty
+	    //@Length(min = 5)
+	   // @SafeHtml
 	    private String password;//указать в логин странице, что не может быть менее 5 символов
 	    
 	    @Column(name = "enabled", nullable = false)
 	    private boolean enabled = true;// требуется для аутентификации springSecurity
 	    
 	    @Column(name = "registered")//columnDefinition="timestamp default now()"
+	    //@Temporal(value = null)
 	    private Date registered = new Date();
 	    
 	    @Enumerated(EnumType.STRING)
-	    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "auth_email"))
+	    @CollectionTable(name = "customer_authorities", joinColumns = @JoinColumn(name = "customer_id"))
 	    @Column(name = "role")
 	    @ElementCollection(fetch = FetchType.EAGER)
 	    @BatchSize(size = 200)
@@ -72,13 +73,12 @@ public class Customer extends NamedEntity {
 	    @Digits(fraction = 0, integer = 10)
 	    private String telephone;
 	    
-	     //optional-создавать customer ТОЛЬКО с уже созданным cart 
-	    @OneToOne(cascade = CascadeType.ALL, optional=false, orphanRemoval=true, fetch=FetchType.EAGER)
-	    @JoinColumn(name="cart_id", nullable=false, referencedColumnName="id")
+	     //optional=false = создавать customer ТОЛЬКО с уже созданным cart 
+	    @OneToOne(cascade = CascadeType.ALL, optional=true, orphanRemoval=true, fetch=FetchType.EAGER)
+	    @JoinColumn(name="cart_id", nullable=false)
 	    //@PrimaryKeyJoinColumn - тогда id обеих сущностей будут идентичны
 	    private ShoppingCart cart;
 	 
-
 		public Customer() {
 		}
 		
@@ -127,7 +127,7 @@ public class Customer extends NamedEntity {
 		}
 
 		public void setRoles(Set<Role> roles) {
-			this.roles = roles;
+			this.roles = CollectionUtils.isEmpty(roles) ? Collections.emptySet() : EnumSet.copyOf(roles);
 		}
 
 		public String getAddress() {
@@ -166,9 +166,9 @@ public class Customer extends NamedEntity {
 		public String toString() {
 			return "Customer [email=" + email + ", password=" + password + ", enabled=" + enabled + ", registered="
 					+ registered + ", roles=" + roles + ", address=" + address + ", lastName=" + lastName + ", city="
-					+ city + ", telephone=" + telephone + ", cart=" + cart + ", id=" + id + ", isNew()=" + isNew()
-					+ "]";
+					+ city + ", telephone=" + telephone + ", cart=" + cart + ", id=" + id + "]";
 		}
-	    
+
+	
 	    
 }

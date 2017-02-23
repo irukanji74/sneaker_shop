@@ -15,8 +15,7 @@ public class ShoppingCart extends BaseEntity{
  
 	private static final long serialVersionUID = 1L;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.EAGER)
-	@JoinColumn(name="item_id", referencedColumnName="id")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="cart")
 	private Set<Item> items;
 	
 	public ShoppingCart() {
