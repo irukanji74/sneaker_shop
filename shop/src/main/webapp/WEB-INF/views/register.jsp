@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix = "form" %>
 <%@ page session="false"%>
 <html>
                                  <jsp:include page="fragments/static_files.jsp" />
@@ -39,25 +40,31 @@
                 <p class="text-muted">If you have any questions, please feel free to
                   <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>
                 <hr>
-               <form action="<spring:url value="/register"/>" method="post">
+                
+         <spring:url value="/register" var="toRegister"/>
+         <form:form method="POST" action="${toRegister}" modelAttribute="customer">
+               
                   <div class="form-group">
                     <label for="name-login">Name</label>
                     <input type="text" class="form-control" name="name">
                   </div>
                   <div class="form-group">
                     <label for="email-login">Email</label>
-                    <input type="text" class="form-control" name="email">
+          <form:input type="text" class="form-control" path="email"/>
                   </div>
                   <div class="form-group">
                     <label for="password-login">Password</label>
-                    <input type="password" class="form-control" name="password">
+                    <form:input type="password" class="form-control" path="password"/>
                   </div>
                   <div class="text-center">
-     <sec:csrfInput />              
+    
+    <!-- Выключается с помощью  <security:csrf disabled="true"/> в security-context.xml-->               
+  <%--    <sec:csrfInput />  --%>   
+           
                     <button type="submit" class="btn btn-template-main">
                       <i class="fa fa-user-md"></i>Register</button>
                   </div>
-                </form>
+                 </form:form>
               </div>
             </div>
             <div class="col-md-6">
@@ -67,18 +74,21 @@
                 <p class="text-muted">Воу. Велкам снова на наш сайт. Ну ёлы палы, как же круто, что ты снова с нами.
                 У нас столько всего нового... Просто залогинься и вперед за покупками, Йихууу!!!</p>
                 <hr>
-                <form action="<spring:url value="/to_login"/>" method="post">
+                  
+        <spring:url value="/to_login" var="toLogin"/>
+        <form:form method="POST" action="${toLogin}">
+         
                   <div class="form-group">
-                    <label for="email">Login Name</label>
+                    <label for="email">Ваш email</label>
                     <input type="text" class="form-control" name="custom_username" >
                   </div>
                   <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">Пароль</label>
                     <input type="password" class="form-control" name="custom_password" >
                   </div>
                   <div class="text-center">
                   
-  <sec:csrfInput />           
+ <%--  <sec:csrfInput />   --%>         
   
                   <c:if test="${param.error != null }">
 				    <p>Invalid Username and Password.</p>
@@ -91,7 +101,7 @@
                     <button type="submit" class="btn btn-template-main">
                       <i class="fa fa-sign-in"></i>Log in</button>
                   </div>
-                </form>
+         </form:form>
               </div>
             </div>
           </div>

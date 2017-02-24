@@ -25,6 +25,8 @@
 
 		<security:intercept-url pattern="/customer_account" access="ROLE_USER" /> 
 		
+		<security:csrf disabled="true"/>
+		
 		<!-- <security:intercept-url pattern="/**" access="ROLE_ANONYMOUS, ROLE_USER" /> -->
 	</security:http>
 
