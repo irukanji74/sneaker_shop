@@ -9,6 +9,9 @@
 
 	<context:component-scan base-package="athletics.web"/>
 	
+	    <!-- @EnableWebMVC, this is the same as This tag registers the DefaultAnnotationHandlerMapping and
+         AnnotationMethodHandlerAdapter beans that are required for Spring MVC -->
+         <!--automatically registers Bean Validation support in Spring MVC through the LocalValidatorFactoryBean  -->
 	<mvc:annotation-driven />
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -25,5 +28,13 @@
 	
 	<!--Use it in static cases when there is no Java controller logic to execute before the view generates the response.  -->
     <!-- <mvc:view-controller path="/" view-name="home_bootstrap"/> -->
+    
+    <!-- This tag allows for mapping the DispatcherServlet to "/" 
+         <mvc:default-servlet-handler/>
+    -->
+    
+    <!-- Exception Resolver that resolves exceptions through @ExceptionHandler methods
+       <bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver"/>
+ 	 -->
 
 </beans>

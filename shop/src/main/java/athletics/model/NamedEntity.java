@@ -12,7 +12,7 @@ public class NamedEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "name", nullable = false)
+	@Column(name = "name")
 	//@NotEmpty
 	//@SafeHtml
 	private String name;

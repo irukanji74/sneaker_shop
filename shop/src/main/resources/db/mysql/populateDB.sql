@@ -4,7 +4,7 @@ delete from customers;
 delete from shopping_carts;
 delete from items;
 
-insert into customers(id, email, name, password, enabled, cart_id) values ('1','nuser@mail.ua','huilo', 'password', 1, '10');
+insert into customers(id, email, name, password, enabled, cart_id) values ('1','nuser@mail.ua','developer', 'password', 1, '10');
 
 insert into customer_authorities(customer_id, role) values ('1', 'ROLE_USER');
 

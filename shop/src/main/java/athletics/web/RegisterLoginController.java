@@ -3,9 +3,14 @@ package athletics.web;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +19,7 @@ import athletics.model.Customer;
 import athletics.model.Role;
 import athletics.model.ShoppingCart;
 import athletics.service.CustomerService;
+import athletics.validators.CustomerValidator;
 
 @Controller
 public class RegisterLoginController {
@@ -39,8 +45,20 @@ public class RegisterLoginController {
 		return "register";
 	}
 	
+	/*http://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/spring-custom-property-editor/
+	 * Если не уточнить("customer") на какой именно атирибут модели или request parameters из jsp стр. будет реагировать initBinder,
+	 *  он будет вызываться на любой http request!!!*/
+	@InitBinder("customer")
+	public void initBinder(WebDataBinder binder) {
+		System.err.println("inside initBinder");
+		binder.addValidators(new CustomerValidator());
+	}
+	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String successRegister( Customer cust){
+	public String successRegister( @Valid @ModelAttribute("customer")Customer cust,  Errors errors){
+		if(errors.hasErrors()){
+			return "register";
+		}
 		Set<Role> roles = new HashSet<>();
 		roles.add(Role.ROLE_USER);
 		cust.setRoles(roles);

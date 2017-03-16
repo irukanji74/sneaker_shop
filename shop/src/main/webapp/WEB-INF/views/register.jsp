@@ -46,12 +46,17 @@
                
                   <div class="form-group">
                     <label for="name-login">Name</label>
-                    <input type="text" class="form-control" name="name">
+                        <!-- <input type="text" class="form-control" name="name"> -->
+                    <form:input id="name-login" cssClass="form-control" path="name"/>
+                    <form:errors path="name"/>
                   </div>
+                  
                   <div class="form-group">
                     <label for="email-login">Email</label>
-          <form:input type="text" class="form-control" path="email"/>
+                   <form:input type="text" class="form-control" path="email"/>
+                    <form:errors path="email"/>
                   </div>
+                  
                   <div class="form-group">
                     <label for="password-login">Password</label>
                     <form:input type="password" class="form-control" path="password"/>

@@ -207,7 +207,7 @@
                                     <li>
                                         <a id="logout" href="#"><i class="fa fa-sign-out"></i> Logout</a>
                                         <form id="logout-form" action="<c:url value="/bambam"/>" method="post">
-								<sec:csrfInput/>
+		<sec:csrfInput/>
 							</form>
                                     </li>
                                     

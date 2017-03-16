@@ -20,6 +20,8 @@ import javax.validation.constraints.Digits;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.util.CollectionUtils;
 
 
@@ -30,22 +32,22 @@ public class Customer extends NamedEntity {
 
 	private static final long serialVersionUID = 1L;
 	
-	    @Column(name = "email", nullable = false, unique = true)
-	    @Email
+	    @Column(name = "email")
+	   // @Email
 	   // @NotEmpty 
-	   // @SafeHtml
+	  //@SafeHtml //Вызывает сбой !!!!!
 	    private String email;
 	
 	    @Column(name = "password", nullable = false)
-	    //@NotEmpty
-	    //@Length(min = 5)
+	    @NotEmpty
+	    @Length(min = 5)
 	   // @SafeHtml
 	    private String password;//указать в логин странице, что не может быть менее 5 символов
 	    
 	    @Column(name = "enabled", nullable = false)
 	    private boolean enabled = true;// требуется для аутентификации springSecurity
 	    
-	    @Column(name = "registered")//columnDefinition="timestamp default now()"
+	    @Column(name = "registered", columnDefinition="timestamp default now()")
 	    //@Temporal(value = null)
 	    private Date registered = new Date();
 	    

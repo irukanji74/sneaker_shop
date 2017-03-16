@@ -12,6 +12,10 @@ import athletics.model.Customer;
 @Repository
 public class JpaCustomerRepositoryImpl implements CustomerRepository{
 
+	/*
+	 * Here we are by default in "Entity Manager per transaction" mode. In this mode, 
+	 * if we use this Entity Manager inside a @Transactional method, then the method will run in a single database transaction.
+	 * http://blog.jhades.org/how-does-spring-transactional-really-work/*/
 	@PersistenceContext
 	private EntityManager em;
 	  

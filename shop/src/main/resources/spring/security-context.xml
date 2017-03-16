@@ -30,15 +30,19 @@
 		<!-- <security:intercept-url pattern="/**" access="ROLE_ANONYMOUS, ROLE_USER" /> -->
 	</security:http>
 
+   <!--  <bean class="athletics.util.PasswordUtil" id="passwordEncoder" factory-method="getPasswordEncoder"/> -->
 
 	<security:authentication-manager>
 		<security:authentication-provider>
+		<!-- <security:password-encoder ref="passwordEncoder"/> -->
 		
 		   <security:jdbc-user-service data-source-ref="dataSource" 
 		      users-by-username-query="SELECT email, password, enabled FROM customers WHERE email=?"
 		      authorities-by-username-query="
 		          SELECT c.email, c_a.role FROM customers c, customer_authorities c_a WHERE c.id=c_a.customer_id AND c.email=?"
 		   />
+		   
+	<!-- 	<security:password-encoder hash="sha-256"/> -->
 		
 			<!-- <security:user-service>
 				<security:user name="user" password="password" authorities="ROLE_USER" />
