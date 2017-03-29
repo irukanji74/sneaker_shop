@@ -45,21 +45,21 @@
          <form:form method="POST" action="${toRegister}" modelAttribute="customer">
                
                   <div class="form-group">
-                    <label for="name-login">Name</label>
-                        <!-- <input type="text" class="form-control" name="name"> -->
-                    <form:input id="name-login" cssClass="form-control" path="name"/>
+                    <form:label path="name">Name</form:label>
+                    <form:input type="text" cssClass="form-control" path="name"/>
                     <form:errors path="name"/>
                   </div>
                   
                   <div class="form-group">
-                    <label for="email-login">Email</label>
-                   <form:input type="text" class="form-control" path="email"/>
+                    <form:label path="email">Email</form:label>
+                   <form:input class="form-control" path="email"/>
                     <form:errors path="email"/>
                   </div>
                   
                   <div class="form-group">
-                    <label for="password-login">Password</label>
+                    <form:label path="password">Password</form:label>
                     <form:input type="password" class="form-control" path="password"/>
+                    <form:errors path="password"/>
                   </div>
                   <div class="text-center">
     
@@ -107,6 +107,7 @@
                       <i class="fa fa-sign-in"></i>Log in</button>
                   </div>
          </form:form>
+         <a href="#" class="btn btn-link">Забыл пароль?</a>
               </div>
             </div>
           </div>

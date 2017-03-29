@@ -19,10 +19,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.util.CollectionUtils;
+
+import athletics.validators.ValidEmail;
 
 
 @Entity
@@ -33,13 +34,13 @@ public class Customer extends NamedEntity {
 	private static final long serialVersionUID = 1L;
 	
 	    @Column(name = "email")
-	    @Email
-	    @NotEmpty 
+	    @ValidEmail
+	    //@NotEmpty 
 	  //@SafeHtml //Вызывает сбой !!!!!
 	    private String email;
 	
 	    @Column(name = "password", nullable = false)
-	    @NotEmpty
+	    //@NotEmpty
 	    @Length(min = 5)
 	   // @SafeHtml
 	    private String password;//указать в логин странице, что не может быть менее 5 символов
@@ -59,7 +60,7 @@ public class Customer extends NamedEntity {
 	    private Set<Role> roles;
 
 	    @Column(name = "address")
-	    @NotEmpty
+	   // @NotEmpty
 	    private String address;
 	   
 	    @Column(name = "lastname")

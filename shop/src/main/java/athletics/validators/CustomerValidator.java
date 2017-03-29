@@ -24,6 +24,9 @@ public class CustomerValidator implements Validator {
 		if(customer.getName().isEmpty()){
 			errors.rejectValue("name", "customer.name", "name field cannot be empty");
 		}
+		if(customer.getPassword().isEmpty()){
+			errors.rejectValue("password", "customer.password", "password field cannot be empty");
+		}
 		
 	}
 

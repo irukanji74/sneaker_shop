@@ -56,6 +56,8 @@ public class RegisterLoginController {
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	public String successRegister( @Valid @ModelAttribute("customer")Customer cust,  Errors errors){
 		if(errors.hasErrors()){
+			System.err.println(errors.getAllErrors());
+			System.err.println("ERRORS!!!!!!!!!!!");
 			return "register";
 		}
 		Set<Role> roles = new HashSet<>();
