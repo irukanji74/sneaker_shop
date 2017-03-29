@@ -36,5 +36,12 @@ public class JpaCustomerRepositoryImpl implements CustomerRepository{
 	        }
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public Customer findById(Integer id) {
+		Query query = this.em.createQuery("SELECT customer FROM customer WHERE id like :id");
+		return (Customer)query.getSingleResult();
+	}
+
 	
 }

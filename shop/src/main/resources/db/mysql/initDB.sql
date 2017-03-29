@@ -2,13 +2,14 @@ CREATE DATABASE IF NOT EXISTS sneakershop;
 USE sneakershop;
 
 CREATE TABLE IF NOT EXISTS  customers (
-  id         INT(4) UNSIGNED NOT NULL PRIMARY KEY ,
+  id         INT(4)      UNSIGNED NOT NULL PRIMARY KEY ,
   name       VARCHAR(30),
   lastname   VARCHAR(30),
   email      VARCHAR(30),
   password   VARCHAR(100),
   address    VARCHAR(30),
   city       VARCHAR(30),
+  zip        VARCHAR(5),
   telephone  VARCHAR(30),
   enabled    BOOLEAN DEFAULT TRUE,
   registered TIMESTAMP,

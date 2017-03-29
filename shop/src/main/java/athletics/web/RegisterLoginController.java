@@ -46,11 +46,10 @@ public class RegisterLoginController {
 	}
 	
 	/*http://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/spring-custom-property-editor/
-	 * Если не уточнить("customer") на какой именно атирибут модели или request parameters из jsp стр. будет реагировать initBinder,
+	 * Если не уточнить("customer") на какой именно атрибут модели или request parameters из jsp стр. будет реагировать initBinder,
 	 *  он будет вызываться на любой http request!!!*/
 	@InitBinder("customer")
 	public void initBinder(WebDataBinder binder) {
-		System.err.println("inside initBinder");
 		binder.addValidators(new CustomerValidator());
 	}
 	
@@ -65,7 +64,7 @@ public class RegisterLoginController {
 		cust.setCart(new ShoppingCart());
 		System.err.println(cust);
 		service.save(cust);
-		
+		System.err.println(((Customer)service.getByEmail(cust.getEmail())).getId());
 		return "redirect:customer_account";
 	}
 	
@@ -76,7 +75,7 @@ public class RegisterLoginController {
 	
 	@RequestMapping(value="/to_login", method=RequestMethod.POST)
 	public String loginSuccess(){
-		return "customer_account";
+		return "customer_account";//изза security настроек перебрасывает на главную страницу TODO!!!!
 	}
 	
 }

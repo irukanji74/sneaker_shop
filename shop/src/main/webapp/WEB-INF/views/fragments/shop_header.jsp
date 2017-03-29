@@ -57,7 +57,7 @@ _________________________________________________________ -->
             <!-- *** NAVBAR ***
     _________________________________________________________ -->
 
-            <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+            <div class="navbar-affixed-top"  data-offset-top="200"><!-- data-spy="affix" держит navbar все время вверху -->
 
                 <div class="navbar navbar-default yamm" role="navigation" id="navbar">
 

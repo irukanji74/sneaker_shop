@@ -33,8 +33,8 @@ public class Customer extends NamedEntity {
 	private static final long serialVersionUID = 1L;
 	
 	    @Column(name = "email")
-	   // @Email
-	   // @NotEmpty 
+	    @Email
+	    @NotEmpty 
 	  //@SafeHtml //Вызывает сбой !!!!!
 	    private String email;
 	
@@ -59,7 +59,7 @@ public class Customer extends NamedEntity {
 	    private Set<Role> roles;
 
 	    @Column(name = "address")
-	   // @NotEmpty
+	    @NotEmpty
 	    private String address;
 	   
 	    @Column(name = "lastname")
@@ -75,6 +75,11 @@ public class Customer extends NamedEntity {
 	    @Digits(fraction = 0, integer = 10)
 	    private String telephone;
 	    
+	    @Column(name="zip")
+	    @Length(min = 5, max = 5, message = "{zip.length}")
+	    private String zipCode;
+	    
+	    
 	     //optional=false = создавать customer ТОЛЬКО с уже созданным cart 
 	    @OneToOne(cascade = CascadeType.ALL, optional=true, orphanRemoval=true, fetch=FetchType.EAGER)
 	    @JoinColumn(name="cart_id", nullable=false)
@@ -84,6 +89,17 @@ public class Customer extends NamedEntity {
 		public Customer() {
 		}
 		
+		
+		public String getZipCode() {
+			return zipCode;
+		}
+
+
+		public void setZipCode(String zipCode) {
+			this.zipCode = zipCode;
+		}
+
+
 		public String getLastName() {
 			return lastName;
 		}
@@ -168,7 +184,8 @@ public class Customer extends NamedEntity {
 		public String toString() {
 			return "Customer [email=" + email + ", password=" + password + ", enabled=" + enabled + ", registered="
 					+ registered + ", roles=" + roles + ", address=" + address + ", lastName=" + lastName + ", city="
-					+ city + ", telephone=" + telephone + ", cart=" + cart + ", id=" + id + "]";
+					+ city + ", telephone=" + telephone + ", zipCode=" + zipCode + ", cart=" + cart + ", id=" + id
+					+ "]";
 		}
 
 	

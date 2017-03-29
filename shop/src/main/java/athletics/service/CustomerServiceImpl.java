@@ -25,4 +25,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return repository.findByEmail(email);
 	}
 
+	@Override
+	public Customer getById(Integer id) {
+		Assert.notNull(id, "id must not be null");
+		return repository.findById(id);
+	}
+
+	
 }

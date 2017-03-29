@@ -22,9 +22,9 @@ public class RootController {
 		return "shop_face";
 	}
 
-	@RequestMapping(value = "/customer_account", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/customer_account", method = RequestMethod.GET)
 	public String toCustomerAccount() {
 		return "customer_account";
-	}
+	}*/
 
 }

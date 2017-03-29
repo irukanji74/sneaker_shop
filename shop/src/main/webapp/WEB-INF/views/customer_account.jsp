@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix = "form" %>
 <%@ page session="false"%>
 
 <html>
@@ -41,136 +42,127 @@
 
                     <div class="col-md-9 clearfix" id="customer-account">
 
-                        <p class="lead">Change your personal details or your password here.</p>
-                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+                        <p class="lead">Здесь Вы можете изменить свои персональные данные.</p>
+                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et.</p>
 
                         <div class="box">
 
                             <div class="heading">
-                                <h3 class="text-uppercase">Change password</h3>
+                                <h3 class="text-uppercase">Изменить пароль!</h3>
                             </div>
 
-                            <form>
+
+ <spring:url value="/changePassword" var="changePass"/>
+            <form:form method="POST" action="${changePass}" modelAttribute="changePassForm" >
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="password_old">Old password</label>
-                                            <input type="password" class="form-control" id="password_old">
+                                            <form:label path="oldPassword">Old password</form:label>
+                                            <form:password path="oldPassword" cssClass="form-control" id="password_old"/>
+                                            <form:errors path="oldPassword" cssClass="error"/>
+                                            <span id="oldPassword.errors" class="error">Неправильный пароль!</span>
+                                           <%--  <h3>${wrong_password}</h3> --%>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="password_1">New password</label>
-                                            <input type="password" class="form-control" id="password_1">
+                                            <form:label path="newPassword">New password</form:label>
+                                            <form:password path="newPassword" cssClass="form-control" id="new_Password"/>
+                                            <form:errors path="newPassword"/>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="password_2">Retype new password</label>
-                                            <input type="password" class="form-control" id="password_2">
+                                            <form:label path="newPasswordConfirm">Retype new password</form:label>
+                                            <form:password path="newPasswordConfirm" cssClass="form-control" id="new_PasswordConfirm"/>
+                                            <form:errors path="newPasswordConfirm"/>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.row -->
+                                
+<%-- <h2>Your password is : ${changePassword.newPassword}</h2> --%>
 
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Save new password</button>
                                 </div>
-                            </form>
+                            </form:form>
 
                         </div>
                         <!-- /.box -->
 
 
-                        <div class="box clearfix">
-                            <div class="heading">
-                                <h3 class="text-uppercase">Personal details</h3>
-                            </div>
-
-                            <form>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="firstname">Firstname</label>
-                                            <input type="text" class="form-control" id="firstname">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="lastname">Lastname</label>
-                                            <input type="text" class="form-control" id="lastname">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
-
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="company">Company</label>
-                                            <input type="text" class="form-control" id="company">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="street">Street</label>
-                                            <input type="text" class="form-control" id="street">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.row -->
-
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-3">
-                                        <div class="form-group">
-                                            <label for="city">Company</label>
-                                            <input type="text" class="form-control" id="city">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <div class="form-group">
-                                            <label for="zip">ZIP</label>
-                                            <input type="text" class="form-control" id="zip">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <div class="form-group">
-                                            <label for="state">State</label>
-                                            <select class="form-control" id="state"></select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-3">
-                                        <div class="form-group">
-                                            <label for="country">Country</label>
-                                            <select class="form-control" id="country"></select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="phone">Telephone</label>
-                                            <input type="text" class="form-control" id="phone">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="email_account">Email</label>
-                                            <input type="text" class="form-control" id="email_account">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 text-center">
-                                        <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Save changes</button>
-
-                                    </div>
-
-                                </div>
-
-                            </form>
-
-                        </div>
-
+                    <div class="box clearfix">
+                <div class="heading">
+                  <h3 class="text-uppercase">Personal details</h3>
+                </div>
+                
+ <spring:url value="/alterCustomer" var="alterCust"/>
+                <form:form  method="POST" action="${alterCust}" modelAttribute="customerToAlter">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="firstname">Firstname</label>
+                        <form:input path="name" cssClass="form-control" id="firstname"/>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="lastname">Lastname</label>
+                        <form:input path="lastName" cssClass="form-control" id="lastname"/>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                  <div class="row">
+                    <div class="col-sm-6"><div class="form-group">
+                        <label for="phone">Telephone</label>
+                        <form:input path="telephone" cssClass="form-control" id="phone"/>
+                      </div></div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="street">Street</label>
+                         <form:input path="address" cssClass="form-control" id="street"/>
+                         <form:errors path="address"/>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.row -->
+                  <div class="row">
+                    <div class="col-sm-6 col-md-3">
+                    
+                    <div class="form-group">
+                        <form:label path="zipCode">ZIP</form:label>
+                        <form:input path="zipCode" cssClass="form-control" id="zip"/>
+                      </div></div>
+                    <div class="col-sm-6 col-md-3">
+                      
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <select class="form-control" id="country"></select>
+                      </div></div>
+                    
+                    <div class="col-sm-6 col-md-3">
+                      
+                    <div class="form-group">
+                        <label for="email_account">Email</label>
+                        <form:input path="email" cssClass="form-control" id="email_account" />
+                      </div></div>
+                    <div class="col-sm-6">
+                      
+                    </div>
+                    <div class="col-sm-6">
+                      
+                    </div>
+                    <div class="col-sm-12 text-center">
+                      <button type="submit" class="btn btn-template-main">
+                        <i class="fa fa-save"></i>Save changes</button>
+                    </div>
+                  </div>
+                </form:form>
+              </div>
                     </div>
                     <!-- /.col-md-9 -->
 
