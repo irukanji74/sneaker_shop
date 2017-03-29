@@ -61,6 +61,12 @@
                     <form:input type="password" class="form-control" path="password"/>
                     <form:errors path="password"/>
                   </div>
+                  
+                  <div class="form-group">
+                    <form:label path="passwordConfirm">Confirm Password</form:label>
+                    <form:input type="password" class="form-control" path="passwordConfirm"/>
+                    <form:errors path="passwordConfirm"/>
+                  </div>
                   <div class="text-center">
     
     <!-- Выключается с помощью  <security:csrf disabled="true"/> в security-context.xml-->               

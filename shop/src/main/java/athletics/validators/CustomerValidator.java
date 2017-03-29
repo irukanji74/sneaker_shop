@@ -27,6 +27,9 @@ public class CustomerValidator implements Validator {
 		if(customer.getPassword().isEmpty()){
 			errors.rejectValue("password", "customer.password", "password field cannot be empty");
 		}
+		if(!(customer.getPasswordConfirm().equals(customer.getPassword()))){
+			errors.rejectValue("passwordConfirm", "customer.passwordConfirm", "Passwords are not equal!");
+		}
 		
 	}
 
