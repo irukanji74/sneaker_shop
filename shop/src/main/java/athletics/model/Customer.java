@@ -21,7 +21,6 @@ import javax.validation.constraints.Digits;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.util.CollectionUtils;
 
 import athletics.validators.ValidEmail;
@@ -44,15 +43,13 @@ public class Customer extends NamedEntity {
 	// @NotEmpty
 	@Length(min = 5)
 	// @SafeHtml
-	private String password;// указать в логин странице, что не может быть менее
-							// 5 символов
-
+	private String password;// указать в логин странице, что не может быть менее 5 символов
+	
 	@Transient
 	private String passwordConfirm;
 
 	@Column(name = "enabled", nullable = false)
-	private boolean enabled = true;// требуется для аутентификации
-									// springSecurity
+	private boolean enabled = true;// требуется для аутентификации springSecurity
 
 	@Column(name = "registered", columnDefinition = "timestamp default now()")
 	// @Temporal(value = null)

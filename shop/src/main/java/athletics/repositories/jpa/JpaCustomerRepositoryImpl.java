@@ -1,8 +1,11 @@
 package athletics.repositories.jpa;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +22,15 @@ public class JpaCustomerRepositoryImpl implements CustomerRepository{
 	@PersistenceContext
 	private EntityManager em;
 	  
+	/*Бросает исключение ! а не null---http://stackoverflow.com/questions/2002993/jpa-getsingleresult-or-null?noredirect=1&lq=1*/
 	@Override
+	@Transactional
 	public Customer findByEmail(String email) {
-		Query query = this.em.createQuery("SELECT DISTINCT customer FROM Customer customer WHERE customer.email LIKE :email");
+		TypedQuery<Customer> query = this.em.createQuery("SELECT DISTINCT customer FROM Customer customer WHERE customer.email LIKE :email"
+				                                         , Customer.class);
         query.setParameter("email", email + "%");
-        return (Customer) query.getSingleResult();
+        Customer customer = getSingleResult(query);
+        return customer;
 	}
 
 	@Override
@@ -43,5 +50,14 @@ public class JpaCustomerRepositoryImpl implements CustomerRepository{
 		return (Customer)query.getSingleResult();
 	}
 
+	public static <T> T getSingleResult(TypedQuery<T> query) {
+	    query.setMaxResults(1);
+	    List<T> list = query.getResultList();
+	    if (list == null || list.isEmpty()) {
+	        return null;
+	    }
+
+	    return list.get(0);
+	}
 	
 }

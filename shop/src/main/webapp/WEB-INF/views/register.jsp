@@ -52,8 +52,9 @@
                   
                   <div class="form-group">
                     <form:label path="email">Email</form:label>
-                   <form:input class="form-control" path="email"/>
+                    <form:input class="form-control" path="email"/>
                     <form:errors path="email"/>
+                    <h3>${email_exists}</h3>
                   </div>
                   
                   <div class="form-group">
@@ -67,6 +68,7 @@
                     <form:input type="password" class="form-control" path="passwordConfirm"/>
                     <form:errors path="passwordConfirm"/>
                   </div>
+                  <h3>${message}</h3>
                   <div class="text-center">
     
     <!-- Выключается с помощью  <security:csrf disabled="true"/> в security-context.xml-->               

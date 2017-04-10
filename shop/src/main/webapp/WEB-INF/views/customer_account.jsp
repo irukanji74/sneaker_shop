@@ -60,7 +60,7 @@
                                             <form:label path="oldPassword">Old password</form:label>
                                             <form:password path="oldPassword" cssClass="form-control" id="password_old"/>
                                             <form:errors path="oldPassword" cssClass="error"/>
-                                            <span id="oldPassword.errors" class="error">Неправильный пароль!</span>
+                                            <h3>${wrong_password}</h3>
                                            <%--  <h3>${wrong_password}</h3> --%>
                                         </div>
                                     </div>

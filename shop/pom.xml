@@ -85,6 +85,11 @@
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+		
 		<!-- Test Artifacts -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -150,5 +155,9 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+		</dependency>
 	</dependencies>
 </project>
