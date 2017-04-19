@@ -16,8 +16,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Digits;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Length;
@@ -44,10 +42,10 @@ public class Customer extends NamedEntity {
 	@Length(min = 5)
 	// @SafeHtml
 	private String password;// указать в логин странице, что не может быть менее 5 символов
-	
+	/*
 	@Transient
 	private String passwordConfirm;
-
+*/
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled = true;// требуется для аутентификации springSecurity
 
@@ -76,7 +74,9 @@ public class Customer extends NamedEntity {
 
 	@Column(name = "telephone")
 	// @NotEmpty
-	@Digits(fraction = 0, integer = 10)
+	/* @Length(max=10, min=10, message="Только 10 цифр - без +")
+	   @NumberFormat(style= Style.NUMBER)*/
+	//@ValidPhone
 	private String telephone;
 
 	@Column(name = "zip")
@@ -92,13 +92,13 @@ public class Customer extends NamedEntity {
 	public Customer() {
 	}
 
-	public String getPasswordConfirm() {
+	/*public String getPasswordConfirm() {
 		return passwordConfirm;
 	}
 
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
-	}
+	}*/
 
 	public String getZipCode() {
 		return zipCode;

@@ -15,11 +15,11 @@ public class CustomerValidator implements Validator {
 
 	@Override
 	public void validate(Object obj, Errors errors) {
-		Customer customer = (Customer)obj;
-		/*if(customer.getEmail().isEmpty()){
+		/*Customer customer = (Customer)obj;
+		if(customer.getEmail().isEmpty()){
 			errors.rejectValue("email", "customer.email", "email field cannot be empty");
-		}*/
-		/*the same as if customer.getEmail().isEmpty() -> errors.rejectValue...*/
+		}
+		the same as if customer.getEmail().isEmpty() -> errors.rejectValue...
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "myProperties.mesage","email is empty");
 		if(customer.getName().isEmpty()){
 			errors.rejectValue("name", "customer.name", "name field cannot be empty");
@@ -29,7 +29,7 @@ public class CustomerValidator implements Validator {
 		}
 		if(!(customer.getPasswordConfirm().equals(customer.getPassword()))){
 			errors.rejectValue("passwordConfirm", "customer.passwordConfirm", "Passwords are not equal!");
-		}
+		}*/
 		
 	}
 

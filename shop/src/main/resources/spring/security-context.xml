@@ -14,7 +14,8 @@
 	<security:http pattern="/webjars/**" security="none" /> 
 
 	<security:http auto-config="true" use-expressions="false">
-		<security:form-login login-page="/register"
+		<security:form-login 
+		    login-page="/register"
 			login-processing-url="/to_login"
 		    username-parameter="custom_username"
 			password-parameter="custom_password" 

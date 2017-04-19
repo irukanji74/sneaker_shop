@@ -27,6 +27,14 @@ CREATE TABLE IF NOT EXISTS shopping_carts(
   id            INT(4) UNSIGNED NOT NULL PRIMARY KEY 
 )engine=InnoDB;
 
+CREATE TABLE IF NOT EXISTS verification_token(
+  id            INT(4) UNSIGNED NOT NULL PRIMARY KEY,
+  token         VARCHAR(30),
+  customer_id   INT(4) UNSIGNED NOT NULL,
+  expiry_date   TIMESTAMP,
+  FOREIGN KEY (customer_id) REFERENCES customers (id)
+)engine=InnoDB;
+
 CREATE TABLE IF NOT EXISTS items(
   id            INT(4) UNSIGNED NOT NULL PRIMARY KEY ,
   name          varchar(255) not null, 

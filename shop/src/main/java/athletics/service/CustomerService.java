@@ -1,10 +1,13 @@
 package athletics.service;
 
+import athletics.dto.CustomerDto;
 import athletics.model.Customer;
 
 public interface CustomerService {
 
-	void save(Customer user);
+	void save(Customer customer);
+	
+	void createNewCustomerAccount(CustomerDto customerDto);
 
 	Customer getByEmail(String email);
 

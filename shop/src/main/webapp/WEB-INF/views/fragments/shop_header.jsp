@@ -1,4 +1,5 @@
- <%@ page language="java" contentType="text/html; charset=utf8" pageEncoding="utf8"%>
+ <%-- <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%> --%>
+ 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
@@ -25,22 +26,23 @@ _________________________________________________________ -->
                             </div>
 <!--TODO решить вопрос с modal авторизацией!!!!!!!  -->
                             <div class="login">
-                                <%-- <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Sign in</span></a> --%>
+                            <!--  <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Sign in</span></a> -->
                                
         <sec:authorize access="authenticated" var="authenticated"/>
                                
-                               <c:choose>
-					<c:when test="${authenticated}">
-						<li>
-							<span class="hidden-xs"> Милости просим </span>
+                              <c:choose>
+					           <c:when test="${authenticated}">
+						         <li>
+							     <span class="hidden-xs"> Привет,  </span>
 		<sec:authentication property="name"/>
-								<a href="<spring:url value="/customer_account"/>"> Аккаунт </a>
+								<a href="<spring:url value="/customer_account"/>"><span class="hidden-xs text-uppercase">Кабинет</span></a>
 							
         <sec:csrfInput/>
 						</li>	
 					</c:when>
 					<c:otherwise>
-	       <a href="<spring:url value="/register/"/>"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Sign in</span></a>
+					<%-- <spring:url value="/register/"/> --%>
+	       <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Sign in</span></a>
              <a href="<spring:url value="/register/"/>"> <i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Sign up</span></a>
                            		
 					</c:otherwise>
@@ -395,16 +397,23 @@ _________________________________________________________ -->
                     </div>
                     <div class="modal-body">
                     
-                    <c:url value="/customer_account" var="loginVar" />
+                    <c:url value="/to_login" var="tologin" />
                     
-                        <form action="${loginVar}" method="POST">
+                        <form action="${tologin}" method="POST" >
                           <div class="form-group">
-                                <input type="text" class="form-control"name="custom_username" placeholder="login">
+                                <input type="text" class="form-control"name="custom_username" placeholder="email">
                           </div>
                           <div class="form-group">
                             <input type="password" class="form-control" name="custom_password" placeholder="password">
                           </div>
 <sec:csrfInput />
+                  <c:if test="${param.error != null }">
+				    <p>Invalid Username and Password.</p>
+			      </c:if>  
+			      
+			     <%--  <c:if test="${param.logout != null }">
+				   <p>Вы вышли из аккаунта, Пичалька...</p>
+			      </c:if>   --%>         
                             <p class="text-center">
                                 <button class="btn btn-template-main"><i class="fa fa-sign-in"></i> Log in</button>
                             </p>

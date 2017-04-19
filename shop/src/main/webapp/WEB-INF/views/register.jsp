@@ -1,4 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=utf8" pageEncoding="utf8"%>
+ <%-- <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%> --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
@@ -14,14 +14,14 @@
         <div class="container">
           <div class="row">
             <div class="col-md-7">
-              <h1>New account / Sign in</h1>
+              <h1>Регистрация / Войти</h1>
             </div>
             <div class="col-md-5">
               <ul class="breadcrumb">
                 <li>
                   <a href="index.html">Home</a>
                 </li>
-                <li>New account / Sign in</li>
+                <li>Регистрация / Войти</li>
               </ul>
             </div>
           </div>
@@ -32,7 +32,7 @@
           <div class="row">
             <div class="col-md-6">
               <div class="box">
-                <h2 class="text-uppercase">New account</h2>
+                <h2 class="text-uppercase">Регистрация</h2>
                 <p class="lead">Not our registered customer yet?</p>
                 <p>With registration with us new world of fashion, fantastic discounts and
                   much more opens to you! The whole process will not take you more than a
@@ -42,12 +42,12 @@
                 <hr>
                 
          <spring:url value="/register" var="toRegister"/>
-         <form:form method="POST" action="${toRegister}" modelAttribute="customer">
+         <form:form method="POST" action="${toRegister}" modelAttribute="customerDto" >
                
                   <div class="form-group">
-                    <form:label path="name">Name</form:label>
-                    <form:input type="text" cssClass="form-control" path="name"/>
-                    <form:errors path="name"/>
+                    <form:label path="firstName">Name</form:label>
+                    <form:input type="text" cssClass="form-control" path="firstName"/>
+                    <form:errors path="firstName"/>
                   </div>
                   
                   <div class="form-group">
@@ -64,11 +64,11 @@
                   </div>
                   
                   <div class="form-group">
-                    <form:label path="passwordConfirm">Confirm Password</form:label>
-                    <form:input type="password" class="form-control" path="passwordConfirm"/>
-                    <form:errors path="passwordConfirm"/>
+                    <form:label path="matchingPassword">Confirm Password</form:label>
+                    <form:input type="password" class="form-control" path="matchingPassword"/>
+                    <form:errors path="matchingPassword"/>
                   </div>
-                  <h3>${message}</h3>
+                  <h3>${Welcome_Message}</h3>
                   <div class="text-center">
     
     <!-- Выключается с помощью  <security:csrf disabled="true"/> в security-context.xml-->               
@@ -77,9 +77,10 @@
                     <button type="submit" class="btn btn-template-main">
                       <i class="fa fa-user-md"></i>Register</button>
                   </div>
-                 </form:form>
+         </form:form>
               </div>
             </div>
+            
             <div class="col-md-6">
               <div class="box">
                 <h2 class="text-uppercase">Заходи в свою пещеру!</h2>
@@ -104,7 +105,7 @@
  <%--  <sec:csrfInput />   --%>         
   
                   <c:if test="${param.error != null }">
-				    <p>Invalid Username and Password.</p>
+				    <p>Неправильный email или пароль.</p>
 			      </c:if>  
 			      
 			      <c:if test="${param.logout != null }">

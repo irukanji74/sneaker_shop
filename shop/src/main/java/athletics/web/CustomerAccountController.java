@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -20,6 +21,7 @@ import athletics.model.PasswordChangeForm;
 import athletics.service.CustomerService;
 import athletics.validators.CustomerValidator;
 import athletics.validators.PasswordChangeValidator;
+import athletics.validators.PhoneConstraintValidator;
 
 @Controller
 
@@ -34,7 +36,7 @@ public class CustomerAccountController {
 	
 	@InitBinder("changePassForm")
 	public void initPasswordChange(WebDataBinder binder){
-		binder.addValidators(new PasswordChangeValidator());;
+		binder.addValidators(new PasswordChangeValidator());
 	}
 	
 	@ModelAttribute("changePassForm")
@@ -44,6 +46,8 @@ public class CustomerAccountController {
 	
 	@ModelAttribute("customerToAlter")
 	public Customer customerToAlter(){
+		//есть 3 варианта достать principal из метода при помощи разных аргументов
+		//http://www.baeldung.com/get-user-in-spring-security
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Customer customer = this.service.getByEmail(auth.getName());
 		System.err.println(customer);
@@ -51,7 +55,10 @@ public class CustomerAccountController {
 	}
 	
 	@RequestMapping(value="/alterCustomer", method=RequestMethod.POST )
-	public String alterCustomer(@ModelAttribute("customerToAlter")Customer customer){
+	public String alterCustomer(@Valid @ModelAttribute("customerToAlter")Customer customer, BindingResult result){
+		if(result.hasErrors()){
+			return "customer_account";
+		}
 		this.service.save(customer);
 		return "customer_account";
 	}

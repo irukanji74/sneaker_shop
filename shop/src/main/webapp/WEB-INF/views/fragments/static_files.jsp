@@ -1,7 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> -->
 <title>Static files for jsp pages shop</title>
 
     <spring:url value="/webjars/bootstrap/3.3.6/css/bootstrap.min.css" var="bootstrapCss"/>

@@ -1,9 +1,7 @@
 package athletics.web;
 
 import java.io.UnsupportedEncodingException;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -20,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import athletics.listeners.OnRegistrationCompleteEvent;
+import athletics.dto.CustomerDto;
 import athletics.model.Customer;
-import athletics.model.Role;
-import athletics.model.ShoppingCart;
 import athletics.service.CustomerService;
 import athletics.validators.CustomerValidator;
 
@@ -40,17 +36,16 @@ public class RegisterLoginController {
 		this.eventPublisher = eventPublisher;
 	}
 	
-	@ModelAttribute("customer")
+	/*@ModelAttribute("customer")
 	public Customer customer(){
 		System.out.println("adding attribute customer");
 		return new Customer();
-	}
+	}*/
 	
 	//TODO проверить вариант с передачей из метода attribute of model
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String toRegister(Model model){
-		//делает то же, что и верхний метод
-		//model.addAttribute("customer", new Customer());
+		model.addAttribute("customerDto", new CustomerDto());
 		return "register";
 	}
 	
@@ -63,26 +58,24 @@ public class RegisterLoginController {
 	}
 	
 	@RequestMapping(value="/register", method=RequestMethod.POST)
-	public String successRegister( @Valid @ModelAttribute("customer")final Customer cust,  final Errors errors, final Model modelMap
-			, final HttpServletRequest request){
+	public String successRegister( @Valid @ModelAttribute("customerDto")final CustomerDto customerDto,  final Errors errors
+			                       , final Model modelMap , final HttpServletRequest request){
+		
 		if(errors.hasErrors()){
+			System.err.println("Has errors!!!!");
 			return "register";
 		}
-		if(service.getByEmail(cust.getEmail()) != null){
+		/*if(service.getByEmail(customerDto.getEmail()) != null){
 			modelMap.addAttribute("email_exists", "User exists with this email! Try another email!");
 			return "register";
-		}
-		Set<Role> roles = new HashSet<>();
-		roles.add(Role.ROLE_USER);
-		cust.setRoles(roles);
-		cust.setCart(new ShoppingCart());
-		service.save(cust);
-		System.err.println(((Customer)service.getByEmail(cust.getEmail())).getId());
+		}*/
+		this.service.createNewCustomerAccount(customerDto);
 		
-		eventPublisher.publishEvent(new OnRegistrationCompleteEvent(cust, getAppUrl(request), request.getLocale()));
+		//eventPublisher.publishEvent(new OnRegistrationCompleteEvent(cust, getAppUrl(request), request.getLocale()));
 		return "redirect:customer_account";
 	}
 	
+	//TODO доделать TOKEN_INVALID, TOKEN_EXPIRED
 	@RequestMapping(value = "/registrationConfirm", method = RequestMethod.GET)
 	public String confirmRegistration(final Locale locale, final Model model, @RequestParam("token") final String token)
 			throws UnsupportedEncodingException {
@@ -91,7 +84,7 @@ public class RegisterLoginController {
 			final Customer customer = this.service.getCustomerByToken(token);
 			System.out.println(customer);
 		}
-		model.addAttribute("message", "Добро пожаловать, ваш аккаунт подтвержден");
+		model.addAttribute("Welcome_Message", "Добро пожаловать, ваш аккаунт подтвержден");
 		return "register";
 	}
 	
@@ -100,10 +93,11 @@ public class RegisterLoginController {
 		return "register";
 	}
 	
-	@RequestMapping(value="/to_login", method=RequestMethod.POST)
+	//SecurityContext берет на себя работу по переходу на login-processing-url="/to_login"
+	/*@RequestMapping(value="/to_login", method=RequestMethod.POST)
 	public String loginSuccess(){
 		return "customer_account";//изза security настроек перебрасывает на главную страницу TODO!!!!
-	}
+	}*/
 	
 	private String getAppUrl(HttpServletRequest request) {
 		return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();

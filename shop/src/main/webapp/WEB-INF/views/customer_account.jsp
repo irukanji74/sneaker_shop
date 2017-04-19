@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=utf8" pageEncoding="utf8"%>
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix = "form" %>
 <%@ page session="false"%>
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 
                                  <jsp:include page="fragments/static_files.jsp" />
@@ -61,7 +61,6 @@
                                             <form:password path="oldPassword" cssClass="form-control" id="password_old"/>
                                             <form:errors path="oldPassword" cssClass="error"/>
                                             <h3>${wrong_password}</h3>
-                                           <%--  <h3>${wrong_password}</h3> --%>
                                         </div>
                                     </div>
                                 </div>
@@ -120,6 +119,7 @@
                     <div class="col-sm-6"><div class="form-group">
                         <label for="phone">Telephone</label>
                         <form:input path="telephone" cssClass="form-control" id="phone"/>
+                        <form:errors path="telephone"/>
                       </div></div>
                     <div class="col-sm-6">
                       <div class="form-group">
@@ -199,8 +199,9 @@
                                     <li>
                                         <a id="logout" href="#"><i class="fa fa-sign-out"></i> Logout</a>
                                         <form id="logout-form" action="<c:url value="/bambam"/>" method="post">
-		<sec:csrfInput/>
-							</form>
+                                        
+		<%-- disabled in security-config.xml <sec:csrfInput/> --%>
+							            </form>
                                     </li>
                                     
                                     

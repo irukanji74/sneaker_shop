@@ -4,32 +4,34 @@ import java.util.regex.Pattern;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+@Component
 public class PasswordUtil {
 
-	 private static final Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
-	    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+	private static final Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
+	public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
-	    public static PasswordEncoder getPasswordEncoder() {
-	        return PASSWORD_ENCODER;
-	    }
+	public static PasswordEncoder getPasswordEncoder() {
+		return PASSWORD_ENCODER;
+	}
 
-	    public static String encode(String newPassword) {
-	        if (StringUtils.isEmpty(newPassword)) {
-	            return null;
-	        }
-	        if (isEncoded(newPassword)) {
-	            return newPassword;
-	        }
-	        return PASSWORD_ENCODER.encode(newPassword);
-	    }
+	public static String encode(String newPassword) {
+		if (StringUtils.isEmpty(newPassword)) {
+			return null;
+		}
+		if (isEncoded(newPassword)) {
+			return newPassword;
+		}
+		return PASSWORD_ENCODER.encode(newPassword);
+	}
 
-	    public static boolean isMatch(String rawPassword, String password) {
-	        return PASSWORD_ENCODER.matches(rawPassword, password);
-	    }
+	public static boolean isMatch(String rawPassword, String password) {
+		return PASSWORD_ENCODER.matches(rawPassword, password);
+	}
 
-	    public static boolean isEncoded(String newPassword) {
-	        return BCRYPT_PATTERN.matcher(newPassword).matches();
-	    }
+	public static boolean isEncoded(String newPassword) {
+		return BCRYPT_PATTERN.matcher(newPassword).matches();
+	}
 }

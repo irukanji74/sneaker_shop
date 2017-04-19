@@ -13,6 +13,7 @@ It will expire within 24 hours following its creation.
 Has a unique, randomly generated value.
  */
 @Entity
+@Table(name="verification_token")
 public class VerificationToken {
 
     private static final int EXPIRATION = 60 * 24;
@@ -23,10 +24,11 @@ public class VerificationToken {
 
     private String token;
 
+    @Column(name="expiry_date")
     private Date expiryDate;
 
     @OneToOne(targetEntity = Customer.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "customer_id", foreignKey = @ForeignKey(name = "FK_VERIFY_USER"))
+    @JoinColumn(nullable = false, name = "customer_id")//, foreignKey = @ForeignKey(name = "FK_VERIFY_USER")
     private Customer customer;
 
     public VerificationToken() {
