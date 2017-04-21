@@ -18,4 +18,8 @@ public interface CustomerService {
 	String validateVerificationToken(String token);
 
 	Customer getCustomerByToken(String token);
+
+	boolean checkIfValidOldPassword(Customer customer, String password);
+
+	void changeUserPassword(Customer customer, String passwordToChange);
 }

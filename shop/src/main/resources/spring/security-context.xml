@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.1.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
      
      <import resource="datasource-config.xml" />
      
+     <context:component-scan base-package="athletics"/>
      <!-- нужен чтобы работало <sec:authorize access="authenticated" var="authenticated"/> на логин странице -->
     <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
@@ -32,17 +35,19 @@
 		<!-- <security:intercept-url pattern="/**" access="ROLE_ANONYMOUS, ROLE_USER" /> -->
 	</security:http>
 
-   <!--  <bean class="athletics.util.PasswordUtil" id="passwordEncoder" factory-method="getPasswordEncoder"/> -->
+    <bean id="passwordEncoder" class="athletics.util.PasswordUtil"  factory-method="getPasswordEncoder"/>
+    <!-- <bean id="customerService" class="athletics.service.CustomerServiceImpl"/> -->
 
 	<security:authentication-manager>
-		<security:authentication-provider>
-		<!-- <security:password-encoder ref="passwordEncoder"/> -->
+		<security:authentication-provider user-service-ref="customerService">
 		
-		   <security:jdbc-user-service data-source-ref="dataSource" 
+		   <security:password-encoder ref="passwordEncoder"/>
+		
+		  <!--  <security:jdbc-user-service data-source-ref="dataSource" 
 		      users-by-username-query="SELECT email, password, enabled FROM customers WHERE email=?"
 		      authorities-by-username-query="
 		          SELECT c.email, c_a.role FROM customers c, customer_authorities c_a WHERE c.id=c_a.customer_id AND c.email=?"
-		   />
+		   /> -->
 		   
 	<!-- 	<security:password-encoder hash="sha-256"/> -->
 		

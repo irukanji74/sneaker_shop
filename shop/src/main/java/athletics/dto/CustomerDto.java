@@ -15,15 +15,15 @@ public class CustomerDto {
 	
 	@ValidEmail
 	@NotNull
-	@Size(min = 1)
+	@Size(min = 1, message="Email не может быть пустым")
 	private String email;
 	
 	@NotNull
-    @Size(min = 1)
+    @Size(min = 6, message="Пароль не может быть пустым")
 	private String password;
 	
 	@NotNull
-	@Size(min = 1)
+	@Size(min = 6)
 	private String matchingPassword;
 	
 	public String getFirstName() {

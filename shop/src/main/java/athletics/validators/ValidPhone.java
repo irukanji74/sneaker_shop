@@ -14,7 +14,7 @@ import javax.validation.Payload;
 @Target( { ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidPhone {
-	String message() default "Invalid phone, 10 digits, please";
+	String message() default "Телефон должен состоять только из 10 цифр";
     
     Class<?>[] groups() default {};
      

@@ -117,7 +117,7 @@
                   <!-- /.row -->
                   <div class="row">
                     <div class="col-sm-6"><div class="form-group">
-                        <label for="phone">Telephone</label>
+                        <label for="telephone">Telephone</label>
                         <form:input path="telephone" cssClass="form-control" id="phone"/>
                         <form:errors path="telephone"/>
                       </div></div>

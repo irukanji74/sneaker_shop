@@ -13,6 +13,8 @@ public class PhoneConstraintValidator implements ConstraintValidator<ValidPhone,
         if(phoneField == null) {
             return false;
         }
-        return phoneField.matches("[0-9()-/.]*");
+        return phoneField.matches("^\\+?([0-9]{2})?\\(?[0-9]{3}\\)?[0-9]{3}\\-?[0-9]{2}\\-?[0-9]{2}$");
+        //^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$
+        
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import athletics.model.Customer;
 import athletics.model.PasswordChangeForm;
 import athletics.service.CustomerService;
-import athletics.validators.CustomerValidator;
 import athletics.validators.PasswordChangeValidator;
-import athletics.validators.PhoneConstraintValidator;
 
 @Controller
 
@@ -70,12 +67,20 @@ public class CustomerAccountController {
 	
 	@RequestMapping(value="/changePassword", method=RequestMethod.POST)
 	public String changePassword(Model model, @Valid @ModelAttribute("changePassForm") PasswordChangeForm changePassword, Errors errors){
+		
 		if(errors.hasErrors()){
+			System.err.println("has errors!!!!");
 			return "customer_account";
 		}
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Customer customer = this.service.getByEmail(auth.getName());
-		String password = customer.getPassword();
+		if(!this.service.checkIfValidOldPassword(customer, changePassword.getOldPassword())){
+			System.err.println("Внутри валидации PasswordEncoder!!!");
+			model.addAttribute("wrong_password", "Wrong password, try again");
+			return "customer_account";
+		}
+		/*String password = customer.getPassword();
 		String passwordToChange = changePassword.getNewPassword();
 		String oldPassword = changePassword.getOldPassword();
 		if(password.equals(oldPassword)){
@@ -84,7 +89,10 @@ public class CustomerAccountController {
 		} else{
 			model.addAttribute("wrong_password", "Wrong password, try again");
 			return "customer_account";
-		}
+		}*/
+		String passwordToChange = changePassword.getNewPassword();
+		
+		this.service.changeUserPassword(customer, passwordToChange);
 		
 		return "redirect:customer_account";
 	}

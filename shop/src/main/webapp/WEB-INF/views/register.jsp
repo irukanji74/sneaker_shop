@@ -66,7 +66,8 @@
                   <div class="form-group">
                     <form:label path="matchingPassword">Confirm Password</form:label>
                     <form:input type="password" class="form-control" path="matchingPassword"/>
-                    <form:errors path="matchingPassword"/>
+                    <!--path="" покажет ошибки валидации уровня class!!!!!  -->
+                    <form:errors path=""/>
                   </div>
                   <h3>${Welcome_Message}</h3>
                   <div class="text-center">

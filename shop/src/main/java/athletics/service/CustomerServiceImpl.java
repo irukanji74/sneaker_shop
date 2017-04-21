@@ -5,9 +5,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import athletics.dto.CustomerDto;
+import athletics.model.AuthorizedCustomer;
 import athletics.model.Customer;
 import athletics.model.Role;
 import athletics.model.ShoppingCart;
@@ -16,8 +20,8 @@ import athletics.repositories.jpa.CustomerRepository;
 import athletics.repositories.jpa.IVerificationTokenRepository;
 import athletics.util.PasswordUtil;
 
-@Service
-public class CustomerServiceImpl implements CustomerService {
+@Service("customerService")
+public class CustomerServiceImpl implements CustomerService, UserDetailsService {
 	
 	public static final String TOKEN_INVALID = "invalidToken";
     public static final String TOKEN_EXPIRED = "expired";
@@ -29,19 +33,17 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private IVerificationTokenRepository tokenRepository;
 	
-	@Autowired
-    private PasswordUtil  passwordEncoder;
-	
-	
 	@Override
 	public void createNewCustomerAccount(CustomerDto customerDto) {
 		final Customer customer = new Customer();
 		Set<Role> roles = new HashSet<>();
 		roles.add(Role.ROLE_USER);// ИЗМЕНИТЬ ПОРЯДОК НАЗНАЧЕНИЯ РОЛЕЙ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		roles.add(Role.ROLE_ADMIN);
+		//roles.add(Role.ROLE_ADMIN);
 		customer.setName(customerDto.getFirstName());
 		customer.setEmail(customerDto.getEmail());
-		customer.setPassword(passwordEncoder.encode(customerDto.getPassword()));
+		customer.setPassword(PasswordUtil.encode(customerDto.getPassword()));
+		customer.setTelephone("0000000000");//TODO исправить !!!!!!!!!!!!!!!!!!!!!!!!!!
+		System.err.println(customer.getPassword());
 		customer.setCart(new ShoppingCart());
 		customer.setRoles(roles);
 		this.save(customer);
@@ -98,6 +100,28 @@ public class CustomerServiceImpl implements CustomerService {
 	            return verificationToken.getCustomer();
 	        }
 		return null;
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Customer customer = this.repository.findByEmail(email);
+		if (customer == null) {
+            throw new UsernameNotFoundException("Customer " + email + " is not found");
+        }
+		return new AuthorizedCustomer(customer);
+	}
+
+	@Override
+	public boolean checkIfValidOldPassword(Customer customer, String password) {
+		
+		return PasswordUtil.isMatch(password, customer.getPassword());
+	}
+
+	@Override
+	public void changeUserPassword(Customer customer, String newPassword) {
+		customer.setPassword(PasswordUtil.encode(newPassword));
+		this.repository.saveOrUpdateCustomer(customer);
+		
 	}
 
 

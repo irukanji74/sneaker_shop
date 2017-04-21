@@ -22,6 +22,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.util.CollectionUtils;
 
 import athletics.validators.ValidEmail;
+import athletics.validators.ValidPhone;
 
 @Entity
 // @Table(name="customers", uniqueConstraints = {@UniqueConstraint(columnNames =
@@ -42,10 +43,8 @@ public class Customer extends NamedEntity {
 	@Length(min = 5)
 	// @SafeHtml
 	private String password;// указать в логин странице, что не может быть менее 5 символов
-	/*
-	@Transient
-	private String passwordConfirm;
-*/
+	
+	//если работаю через token - false сначала, потом после пдтв. --  true
 	@Column(name = "enabled", nullable = false)
 	private boolean enabled = true;// требуется для аутентификации springSecurity
 
@@ -76,7 +75,7 @@ public class Customer extends NamedEntity {
 	// @NotEmpty
 	/* @Length(max=10, min=10, message="Только 10 цифр - без +")
 	   @NumberFormat(style= Style.NUMBER)*/
-	//@ValidPhone
+	@ValidPhone
 	private String telephone;
 
 	@Column(name = "zip")

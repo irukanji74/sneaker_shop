@@ -65,10 +65,10 @@ public class RegisterLoginController {
 			System.err.println("Has errors!!!!");
 			return "register";
 		}
-		/*if(service.getByEmail(customerDto.getEmail()) != null){
+		if(service.getByEmail(customerDto.getEmail()) != null){
 			modelMap.addAttribute("email_exists", "User exists with this email! Try another email!");
 			return "register";
-		}*/
+		}
 		this.service.createNewCustomerAccount(customerDto);
 		
 		//eventPublisher.publishEvent(new OnRegistrationCompleteEvent(cust, getAppUrl(request), request.getLocale()));
