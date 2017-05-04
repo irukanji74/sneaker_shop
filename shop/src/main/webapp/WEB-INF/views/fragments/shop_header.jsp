@@ -24,24 +24,22 @@ _________________________________________________________ -->
                                 <a href="#" class="external twitter" data-animate-hover="pulse"><i class="fa fa-twitter"></i></a>
                                 <a href="#" class="email" data-animate-hover="pulse"><i class="fa fa-envelope"></i></a>
                             </div>
-<!--TODO решить вопрос с modal авторизацией!!!!!!!  -->
                             <div class="login">
                             <!--  <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Sign in</span></a> -->
                                
         <sec:authorize access="authenticated" var="authenticated"/>
                                
-                              <c:choose>
-					           <c:when test="${authenticated}">
+                      <c:choose>
+					      <c:when test="${authenticated}">
 						         <li>
 							     <span class="hidden-xs"> Привет,  </span>
-		<sec:authentication property="name"/>
-								<a href="<spring:url value="/customer_account"/>"><span class="hidden-xs text-uppercase">Кабинет</span></a>
+		<sec:authentication property="principal.name"/>
+					     <a href="<spring:url value="/customer_account"/>"><span class="hidden-xs text-uppercase">Кабинет</span></a>
 							
-        <sec:csrfInput/>
+        <%-- <sec:csrfInput/> --%>
 						</li>	
 					</c:when>
 					<c:otherwise>
-					<%-- <spring:url value="/register/"/> --%>
 	       <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Sign in</span></a>
              <a href="<spring:url value="/register/"/>"> <i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Sign up</span></a>
                            		

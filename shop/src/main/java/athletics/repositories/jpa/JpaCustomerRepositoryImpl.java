@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import athletics.model.Customer;
 
 @Repository
-public class JpaCustomerRepositoryImpl implements CustomerRepository{
+public class JpaCustomerRepositoryImpl implements ICustomerRepository{
 
 	/*
 	 * Here we are by default in "Entity Manager per transaction" mode. In this mode, 

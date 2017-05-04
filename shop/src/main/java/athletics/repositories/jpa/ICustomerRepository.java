@@ -2,7 +2,7 @@ package athletics.repositories.jpa;
 
 import athletics.model.Customer;
 
-public interface CustomerRepository {
+public interface ICustomerRepository {
 
 	Customer findByEmail(String email);
 	

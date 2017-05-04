@@ -117,7 +117,7 @@
                       <i class="fa fa-sign-in"></i>Log in</button>
                   </div>
          </form:form>
-         <a href="#" class="btn btn-link">Забыл пароль?</a>
+         <a href="<spring:url value="/register/forget_password/"/>" class="btn btn-link">Забыл пароль?</a>
               </div>
             </div>
           </div>

@@ -1,9 +1,12 @@
 package athletics.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import athletics.dto.CustomerDto;
 import athletics.model.Customer;
+import athletics.model.PasswordResetToken;
 
-public interface CustomerService {
+public interface CustomerService extends  UserDetailsService{
 
 	void save(Customer customer);
 	
@@ -21,5 +24,11 @@ public interface CustomerService {
 
 	boolean checkIfValidOldPassword(Customer customer, String password);
 
+	void resetUserPassword(Customer customer, String newPassword);
+
 	void changeUserPassword(Customer customer, String passwordToChange);
+
+	void createPasswordResetTokenForCustomer(Customer customer, String token);
+
+	PasswordResetToken getPasswordResetToken(String token);
 }

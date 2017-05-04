@@ -13,25 +13,30 @@ import org.springframework.stereotype.Service;
 import athletics.dto.CustomerDto;
 import athletics.model.AuthorizedCustomer;
 import athletics.model.Customer;
+import athletics.model.PasswordResetToken;
 import athletics.model.Role;
 import athletics.model.ShoppingCart;
 import athletics.model.VerificationToken;
-import athletics.repositories.jpa.CustomerRepository;
+import athletics.repositories.jpa.ICustomerRepository;
+import athletics.repositories.jpa.IPasswordResetTokenRepository;
 import athletics.repositories.jpa.IVerificationTokenRepository;
 import athletics.util.PasswordUtil;
 
 @Service("customerService")
-public class CustomerServiceImpl implements CustomerService, UserDetailsService {
+public class CustomerServiceImpl implements CustomerService {
 	
 	public static final String TOKEN_INVALID = "invalidToken";
     public static final String TOKEN_EXPIRED = "expired";
     public static final String TOKEN_VALID = "valid";
 
 	@Autowired
-    private CustomerRepository repository;
+    private ICustomerRepository repository;
 	
 	@Autowired
 	private IVerificationTokenRepository tokenRepository;
+	
+	@Autowired
+	IPasswordResetTokenRepository resetTokenRepository;
 	
 	@Override
 	public void createNewCustomerAccount(CustomerDto customerDto) {
@@ -119,9 +124,28 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
 	@Override
 	public void changeUserPassword(Customer customer, String newPassword) {
+		System.err.println(customer + " " + newPassword );
 		customer.setPassword(PasswordUtil.encode(newPassword));
 		this.repository.saveOrUpdateCustomer(customer);
 		
+	}
+
+	@Override
+	public void resetUserPassword(Customer customer, String newPassword) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void createPasswordResetTokenForCustomer(Customer customer, String token) {
+		final PasswordResetToken myToken = new PasswordResetToken(token, customer);
+        resetTokenRepository.save(myToken);
+		
+	}
+
+	@Override
+	public PasswordResetToken getPasswordResetToken(String token) {
+		return resetTokenRepository.findByToken(token);
 	}
 
 

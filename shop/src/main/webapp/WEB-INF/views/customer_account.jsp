@@ -52,8 +52,8 @@
                             </div>
 
 
- <spring:url value="/changePassword" var="changePass"/>
-            <form:form method="POST" action="${changePass}" modelAttribute="changePassForm" >
+ <spring:url value="/updatePassword" var="updatePass"/>
+            <form:form method="POST" action="${updatePass}" modelAttribute="updatePassForm" >
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
