@@ -33,7 +33,7 @@ _________________________________________________________ -->
 					      <c:when test="${authenticated}">
 						         <li>
 							     <span class="hidden-xs"> Привет,  </span>
-		<sec:authentication property="principal.name"/>
+		<sec:authentication property="name"/>
 					     <a href="<spring:url value="/customer_account"/>"><span class="hidden-xs text-uppercase">Кабинет</span></a>
 							
         <%-- <sec:csrfInput/> --%>

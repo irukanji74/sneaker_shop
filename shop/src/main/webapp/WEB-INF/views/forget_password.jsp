@@ -22,7 +22,6 @@
       </div>
       <div id="content">
         <div class="container">
-      <%--    <form:form method="POST" action="${toRegister}" > --%>
           <div class="row text-left">Введите ваш email</div>
          
           <div class="row">

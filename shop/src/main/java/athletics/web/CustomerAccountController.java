@@ -62,7 +62,8 @@ public class CustomerAccountController {
 		//http://www.baeldung.com/get-user-in-spring-security
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Customer customer = this.service.getByEmail(auth.getName());
-		System.err.println(customer);
+		LOGGER.debug("ВВВВВВот такой customer ");
+		System.err.println("ВВВВВВот такой customer " + customer);
 		return customer;
 	}
 	
@@ -76,7 +77,11 @@ public class CustomerAccountController {
 	}
 	
 	@RequestMapping(value="/customer_account", method=RequestMethod.GET )
-	public String customerAccountPage(){
+	public String customerAccountPage(Model map){
+		/*Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Customer customer = this.service.getByEmail(auth.getName());
+		System.out.println("ВВВВВВот такой customer " + customer);
+		map.addAttribute("customerToAlter", customer);*/
 		return "customer_account";
 	}
 	
@@ -130,7 +135,6 @@ public class CustomerAccountController {
 		this.service.createPasswordResetTokenForCustomer(customer, token);
 		try {
             final String appUrl = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            System.err.println(appUrl);
             final SimpleMailMessage email = constructResetTokenEmail(appUrl, request.getLocale(), token, customer);
             JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
             mailSender.setHost("localhost"); 
@@ -153,7 +157,6 @@ public class CustomerAccountController {
                                         @RequestParam("token") final String token){
 		final Locale locale = request.getLocale();
 		final PasswordResetToken passResetToken = service.getPasswordResetToken(token);
-		System.err.println(passResetToken.toString());
 		final Customer customer  = passResetToken.getCustomer();
 		if(passResetToken == null || (customer.getId() != id)){
 			model.addAttribute("token_invalid", "Токен ваш, батенька, фуфел натуральный!");
@@ -169,7 +172,7 @@ public class CustomerAccountController {
 		}
 		
 		Authentication auth = new UsernamePasswordAuthenticationToken( customer, null
-				                               , service.loadUserByUsername(customer.getEmail()).getAuthorities());
+				                                      , service.loadUserByUsername(customer.getEmail()).getAuthorities());
 			    SecurityContextHolder.getContext().setAuthentication(auth);
 		
 		return "redirect:resetPasswordFormPage";
@@ -177,19 +180,17 @@ public class CustomerAccountController {
 	
 	@RequestMapping(value="/changePassword", method=RequestMethod.POST)
 	public String resetNewPassword(Model modelMap, @RequestParam("password") final String password
-			                                      , @RequestParam("matchingPassword") final String matchingPassword){
+			                        , @RequestParam("matchingPassword") final String matchingPassword){
 		if(password.equals(matchingPassword)){
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			System.err.println("in method -- resetNewPassword " + auth.getName());
 			Customer customer = (Customer)auth.getPrincipal();
-			//Customer customer = this.service.getByEmail(auth.getName());
-			System.err.println("after customer got " + customer);
 			this.service.changeUserPassword(customer, password);
-			return "redirect:/";
+			SecurityContextHolder.getContext().setAuthentication(null);
+			return "redirect:register";
 		}
 	      modelMap.addAttribute("passwordsNotMatch", "Пароли не совпадают");
 		return "resetPasswordFormPage";
-	}
+	} 
 	
 	@RequestMapping(value="/resetPasswordFormPage", method=RequestMethod.GET )
 	public String getResetPasswordFormPage(Model model){

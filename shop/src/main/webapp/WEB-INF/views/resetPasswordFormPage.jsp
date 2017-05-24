@@ -36,29 +36,35 @@
 
  <spring:url value="/changePassword" var="changePass"/>
  
-            <form:form method="POST" action="${changePass}" modelAttribute="customerDto"> <!--   -->
+            <form method="POST" action="${changePass}" > <!--   -->
                                <%--  <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <form:label path="oldPassword">Old password</form:label>
                                             <form:password path="oldPassword" cssClass="form-control" id="password_old"/>
                                             <form:errors path="oldPassword" cssClass="error"/>
-                                            <h3>${wrong_password}</h3>
+                                            <h3>${wrong_password}</h3> 
                                         </div>
                                     </div>
                                 </div> --%>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <form:label path="password">New password</form:label>
-                                            <form:password path="password" cssClass="form-control" id="password"/>
+                                        
+                                 <input type = "password" name = "password" placeholder="New password"/>
+                                        
+                                          <%--   <form:label path="password">New password</form:label>
+                                            <form:password path="password" cssClass="form-control" id="password"/> --%>
                                             <%-- <form:errors path="password"/> --%>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <form:label path="matchingPassword">Retype new password</form:label>
-                                            <form:password path="matchingPassword" cssClass="form-control" id="matchingPassword"/>
+                                        
+                                   <input type = "password" name = "matchingPassword" placeholder="Retype new password"/>
+                                   
+                                           <%--  <form:label path="matchingPassword">Retype new password</form:label>
+                                            <form:password path="matchingPassword" cssClass="form-control" id="matchingPassword"/> --%>
                                             <%-- <form:errors path="matchingPassword"/> --%>
                                         </div>
                                     </div>
@@ -68,7 +74,7 @@
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Reset password</button>
                                 </div>
-                            </form:form>
+                            </form>
 </sec:authorize>
                         </div>
                         <!-- /.box -->
